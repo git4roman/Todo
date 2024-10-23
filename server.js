@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import path from 'path';
+const app = express();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -14,7 +15,6 @@ dotenv.config(); // Load environment variables from .env file
 import todoRouter from "./routes/todo.js";
 import connectdb from "./db/connectdb.js";
 
-const app = express();
 
 // Middleware
 app.use(express.json()); // Parse incoming JSON requests
