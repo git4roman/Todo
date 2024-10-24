@@ -24,6 +24,10 @@ const Wrapper = styled.section`
       background-color: #859bff;
     }
   }
+
+  input {
+    height: 25px;
+  }
 `;
 const CreateTodo = () => {
   const {
@@ -59,7 +63,7 @@ const CreateTodo = () => {
           name={"title"}
           value={title}
           handlechange={handleTodoInput}
-          labelText={"TITLE"}
+          labelText={"Title"}
         />
         <FormRow
           name={"description"}
