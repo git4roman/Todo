@@ -4,10 +4,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   margin: 0;
-  width: clamp(400px, 500px, 700px);
-  border: 2px solid red;
+  width: clamp(200px, 350px, 400px);
+  /* border: 2px solid red; */
   padding: 1rem;
   position: relative;
+  h1 {
+    text-shadow: 2px 4px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 8px;
+  }
 
   tr {
     position: relative;
