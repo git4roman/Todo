@@ -3,8 +3,17 @@ import dotenv from "dotenv";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
-const app = express();
+import cors from "cors";
 
+const app = express();
+const corsOptions = {
+  origin: "https://todo-psi-lilac-72.vercel.app", // Allow only this URL
+  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
+  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
+  credentials: true, // Allow cookies or other credentials if needed
+};
+
+app.use(cors(corsOptions));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // only when ready to deploy
