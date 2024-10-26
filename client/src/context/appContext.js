@@ -46,7 +46,7 @@ const AppProvider = ({ children }) => {
     navigate("/edit");
     dispatch({ type: EDIT_TODO_BEGIN, payload: { id } });
     try {
-      const response = await axios.get(`api/v1/todo/${id}`);
+      const response = await axios.get(`/todo/${id}`);
       const data = response.data;
       dispatch({
         type: EDIT_FETCH,
@@ -67,7 +67,7 @@ const AppProvider = ({ children }) => {
     const { id, title, description, priority } = state;
     dispatch({ type: CREATE_JOB_BEGIN }); // Set loading state
     try {
-      const response = await axios.patch(`api/v1/todo/${id}`, {
+      const response = await axios.patch(`/todo/${id}`, {
         title,
         description,
         priority,
@@ -96,7 +96,7 @@ const AppProvider = ({ children }) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/api/v1/todo/${id}`);
+      const response = await axios.delete(`/todo/${id}`);
 
       if (response.status === 200) {
         console.log(`Todo with id: ${id} deleted successfully.`);
@@ -119,7 +119,7 @@ const AppProvider = ({ children }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post("/api/v1/auth/register");
+      const response = await axios.post("/auth/register");
       if (response.status === 201) {
         console.log("User created successfully");
       }
@@ -136,7 +136,7 @@ const AppProvider = ({ children }) => {
 
   const getAllTodo = async () => {
     try {
-      const response = await axios.get("/api/v1/todo");
+      const response = await axios.get("/todo");
       dispatch({
         type: GET_TODOS_SUCCESS,
         payload: response.data,
@@ -155,7 +155,7 @@ const AppProvider = ({ children }) => {
     dispatch({ type: CREATE_JOB_BEGIN });
     try {
       const { title, description, priority } = state;
-      const response = await axios.post("/api/v1/todo", {
+      const response = await axios.post("/todo", {
         title,
         description,
         priority,
