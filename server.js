@@ -19,7 +19,7 @@ import connectdb from "./db/connectdb.js";
 app.use(express.json()); // Parse incoming JSON requests
 
 // Use the todo router for the "/api/v1/todo" path
-app.use("/", (req, res) => {
+app.use("/api/hello", (req, res) => {
   res.json({ msg: "Hello" });
 });
 app.use("/api/v1/todo", todoRouter);
