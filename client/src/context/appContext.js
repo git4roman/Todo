@@ -2,6 +2,7 @@ import { createContext, useReducer, useContext, useEffect } from "react";
 import reducer from "./reducer.js";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import axios from "../utils/axios.js";
 import {
   HANDLE_CHANGE,
   CLEAR_VALUES,
@@ -15,7 +16,6 @@ import {
   UPDATE_TODO_SUCCESS,
   DELETE_TODO,
 } from "./actions.js";
-import axios from "axios";
 
 const initialState = {
   title: "",
