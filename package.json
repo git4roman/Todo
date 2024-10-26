@@ -2,7 +2,7 @@
   "name": "todo",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "setup-production": "npm run install-client && npm run build-client && npm install",
@@ -10,8 +10,8 @@
     "build-client": "cd client && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "npm start --prefix client",
-    "server": "nodemon server --ignore client",
-    "start": "node server.js"
+    "server": "nodemon index --ignore client",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
