@@ -16,6 +16,7 @@ import {
   UPDATE_TODO_SUCCESS,
   DELETE_TODO,
 } from "./actions.js";
+import { useAlertContext } from "./alertContext.js";
 
 const initialState = {
   title: "",
@@ -36,6 +37,7 @@ const AppContext = createContext();
 
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const { displayAlert, clearAlert } = useAlertContext();
   const navigate = useNavigate();
 
   const handleChange = ({ name, value }) => {
@@ -46,7 +48,7 @@ const AppProvider = ({ children }) => {
     navigate("/edit");
     dispatch({ type: EDIT_TODO_BEGIN, payload: { id } });
     try {
-      const response = await axios.get(`/todo/${id}`);
+      const response = await axios.get(`/api/v1/todo/${id}`);
       const data = response.data;
       dispatch({
         type: EDIT_FETCH,
@@ -67,7 +69,7 @@ const AppProvider = ({ children }) => {
     const { id, title, description, priority } = state;
     dispatch({ type: CREATE_JOB_BEGIN }); // Set loading state
     try {
-      const response = await axios.patch(`/todo/${id}`, {
+      const response = await axios.patch(`/api/v1/todo/${id}`, {
         title,
         description,
         priority,
@@ -96,7 +98,7 @@ const AppProvider = ({ children }) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await axios.delete(`/todo/${id}`);
+      const response = await axios.delete(`/api/v1/todo/${id}`);
 
       if (response.status === 200) {
         console.log(`Todo with id: ${id} deleted successfully.`);
@@ -119,7 +121,7 @@ const AppProvider = ({ children }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post("/auth/register");
+      const response = await axios.post("/api/v1/auth/register");
       if (response.status === 201) {
         console.log("User created successfully");
       }
@@ -128,15 +130,15 @@ const AppProvider = ({ children }) => {
     }
   };
 
-  const clearAlert = () => {
-    setTimeout(() => {
-      dispatch({ type: CLEAR_ALERT });
-    }, 2000);
-  };
+  // const clearAlert = () => {
+  //   setTimeout(() => {
+  //     dispatch({ type: CLEAR_ALERT });
+  //   }, 2000);
+  // };
 
   const getAllTodo = async () => {
     try {
-      const response = await axios.get("/todo");
+      const response = await axios.get("/api/v1/todo");
       dispatch({
         type: GET_TODOS_SUCCESS,
         payload: response.data,
@@ -152,25 +154,35 @@ const AppProvider = ({ children }) => {
   }, []);
 
   const createTodo = async () => {
-    dispatch({ type: CREATE_JOB_BEGIN });
+    dispatch({ type: "CREATE_JOB_BEGIN" });
+
     try {
       const { title, description, priority } = state;
-      const response = await axios.post("/todo", {
+      const response = await axios.post("/api/v1/todo", {
         title,
         description,
         priority,
       });
-      toast.success("Successfully Created A Todo");
-      console.log("Successfully Created A Todo", response);
-
-      dispatch({ type: SUCCESS_VALUES });
-      dispatch({ type: CLEAR_VALUES });
+      // toast.success("Successfully created a todo");
+      displayAlert("success", "Successfully created a Todo");
+      setTimeout(() => {
+        clearAlert();
+      }, 1500);
+      // dispatch({
+      //   type: "SHOW_ALERT",
+      //   payload: {
+      //     alertType: "success",
+      //     alertText: "Successfully created a Todo",
+      //   },
+      // });
+      dispatch({ type: "CLEAR_VALUES" });
     } catch (error) {
-      console.error("Unsuccess in creating a Todo", error);
-      toast.error("Failed to create todo.");
-    } finally {
-      clearAlert();
+      toast.error(error);
+      console.log("There is a problem", error);
     }
+  };
+  const AlertClear = () => {
+    dispatch({ type: "CLEAR_ALERT" });
   };
 
   return (
@@ -184,6 +196,7 @@ const AppProvider = ({ children }) => {
         getAllTodo,
         updateTodo,
         handleRegister,
+        AlertClear,
       }}
     >
       {children}

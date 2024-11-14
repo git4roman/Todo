@@ -1,12 +1,15 @@
 import React from "react";
 import { AppProvider } from "./appContext";
 import { AuthProvider } from "./authContext";
+import { AlertProvider } from "./alertContext";
 
 const AppProviders = ({ children }) => {
   return (
-    <AuthProvider>
-      <AppProvider>{children}</AppProvider>
-    </AuthProvider>
+    <AlertProvider>
+      <AuthProvider>
+        <AppProvider>{children}</AppProvider>
+      </AuthProvider>
+    </AlertProvider>
   );
 };
 

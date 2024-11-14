@@ -9,3 +9,4 @@ export const EDIT_FETCH = "EDIT_FETCH";
 export const EDIT_FETCH_SUCCESS = "EDIT_FETCH_SUCCESS";
 export const UPDATE_TODO_SUCCESS = "UPDATE_TODO_SUCCESS";
 export const DELETE_TODO = "DELETE_TODO";
+export const CHANGE_AUTH = "CHANGE_AUTH";

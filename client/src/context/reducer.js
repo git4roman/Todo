@@ -6,19 +6,45 @@ const reducer = (state, action) => {
   if (action.type === "CREATE_JOB_BEGIN") {
     return { ...state, isLoading: true };
   }
-
-  if (action.type === "SUCCESS_VALUES") {
+  if (action.type == "SETUP_USER") {
     return {
       ...state,
-      showAlert: true,
-      isLoading: false,
-      alertType: "Success",
-      alertText: "Succesffully created...",
+      loading: false,
+      // alertText: action.payload.alertText,
     };
   }
 
+  // if (action.type == "CLEAR_TOAST_MESSAGE") {
+  //   return { ...state, successMessage: "" };
+  // }
+
+  // if (action.type === "SUCCESS_VALUES") {
+  //   return {
+  //     ...state,
+  //     showAlert: true,
+  //     isLoading: false,
+  //     alertType: "Success",
+  //     alertText: "Succesffully created...",
+  //   };
+  // }
+  if (action.type === "SETUP") {
+    return { ...state, user: action.payload.user };
+  }
   if (action.type === "GET_TODOS_SUCCESS") {
     return { ...state, todos: action.payload.todos };
+  }
+
+  if (action.type === "CLEAR_USER") {
+    return { ...state, user: "" };
+  }
+
+  if (action.type === "SHOW_ALERT") {
+    return {
+      ...state,
+      showAlert: true,
+      alertText: action.payload.alertText,
+      alertType: action.payload.alertType,
+    };
   }
 
   if (action.type === "CLEAR_ALERT") {
@@ -39,7 +65,7 @@ const reducer = (state, action) => {
   if (action.type === "EDIT_FETCH_SUCCESS") {
     return { ...state, isLoading: false };
   }
- 
+
   if (action.type === "CLEAR_VALUES") {
     const initialState = {
       title: "",

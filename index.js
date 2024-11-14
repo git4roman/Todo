@@ -6,14 +6,15 @@ import path from "path";
 import cors from "cors";
 
 const app = express();
-const corsOptions = {
-  origin: "https://todo-psi-lilac-72.vercel.app", // Allow only this URL
-  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
-  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
-  credentials: true, // Allow cookies or other credentials if needed
-};
+app.use(express.json()); // Parse incoming JSON requests
+// const corsOptions = {
+//   origin: "https://todo-psi-lilac-72.vercel.app",
+//   methods: ["GET", "POST", "PUT", "DELETE"],
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors({ credentials: true }));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // only when ready to deploy
@@ -22,16 +23,19 @@ app.use(express.static(path.resolve(__dirname, "./client/build")));
 dotenv.config(); // Load environment variables from .env file
 
 import todoRouter from "./routes/todo.js";
+import authRouter from "./routes/auth.js";
 import connectdb from "./db/connectdb.js";
 
 // Middleware
-app.use(express.json()); // Parse incoming JSON requests
 
 // Use the todo router for the "/api/v1/todo" path
 app.use("/api/hello", (req, res) => {
   res.json({ msg: "Hello" });
 });
 app.use("/api/v1/todo", todoRouter);
+app.use("/api/v1/auth", authRouter);
+// import User from "./models/user.js";
+// app.post("/api/v1/auth/register", );
 
 // only when ready to deploy
 app.get("*", function (request, response) {
