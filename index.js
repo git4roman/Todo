@@ -7,12 +7,12 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json()); // Parse incoming JSON requests
-// const corsOptions = {
-//   origin: "https://todo-psi-lilac-72.vercel.app",
-//   methods: ["GET", "POST", "PUT", "DELETE"],
-//   allowedHeaders: ["Content-Type", "Authorization"],
-//   credentials: true,
-// };
+const corsOptions = {
+  origin: "https://todo-demo-alpha.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
 
 app.use(cors({ credentials: true }));
 const __dirname = dirname(fileURLToPath(import.meta.url));
