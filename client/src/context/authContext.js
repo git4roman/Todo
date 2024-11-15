@@ -28,6 +28,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
+        console.log("Base URL:", axios.defaults.baseURL);
         const response = await axios.get("/api/v1/auth/login"); // Replace with your actual endpoint to fetch user data
         if (response.data) {
           dispatch({
