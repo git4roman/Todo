@@ -14,7 +14,14 @@ app.use(express.json()); // Parse incoming JSON requests
 //   credentials: true,
 // };
 
-app.use(cors({ credentials: true }));
+const corsOptions = {
+  origin: "https://todo-demo-alpha.vercel.app", // Allow only this URL
+  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
+  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
+  credentials: true, // Allow cookies or other credentials if needed
+};
+
+app.use(cors(corsOptions));
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // only when ready to deploy
