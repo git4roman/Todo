@@ -1,7 +1,7 @@
 import User from "../models/user.js";
 import hashPassword from "../utils/passwordUtils.js";
 import bcrypt from "bcryptjs";
-import createJWT from "../utils/tokenutils.js";
+import createJWT from "../utils/tokenUtils.js";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
@@ -85,7 +85,6 @@ export const loginUser = async (req, res) => {
 };
 
 export const logOut = (req, res) => {
-  
   res.clearCookie("token");
   res.json({ msg: "User logged out" });
 };
