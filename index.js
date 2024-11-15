@@ -7,12 +7,6 @@ import cors from "cors";
 
 const app = express();
 app.use(express.json()); // Parse incoming JSON requests
-const corsOptions = {
-  origin: "https://todo-demo-alpha.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true,
-};
 
 const corsOptions = {
   origin: "https://todo-demo-alpha.vercel.app", // Allow only this URL
