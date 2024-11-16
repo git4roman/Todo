@@ -151,7 +151,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     getAllTodo(); // Fetch todos on component mount
-  }, [todos]);
+  }, []);
 
   const createTodo = async () => {
     dispatch({ type: "CREATE_JOB_BEGIN" });
