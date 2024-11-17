@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const URL = process.env.REACT_APP_URL;
+const URL = "http://localhost:5000";
 const axiosInstance = axios.create({
-  baseURL: URL || "http://localhost:5000",
+  baseURL: `${URL}/api/v1`, // Removed unnecessary double quotes
 });
 
 export default axiosInstance;

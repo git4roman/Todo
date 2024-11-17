@@ -6,13 +6,13 @@
   "type": "module",
   "scripts": {
     "setup-production": "npm run install-client && npm run build-client && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "install-client": "cd client && npm install",
     "build-client": "cd client && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm start --prefix client",
     "server": "nodemon index --ignore client",
-    "start": "node index",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "client": "npm start --prefix client",
+    "start": "node index.js",
+    "dev": "concurrently --kill-others-on-fail \" npm run server \" \"npm run client\""
   },
   "keywords": [],
   "author": "",

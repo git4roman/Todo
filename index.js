@@ -8,19 +8,21 @@ import cors from "cors";
 const app = express();
 app.use(express.json()); // Parse incoming JSON requests
 
-const corsOptions = {
-  origin: "https://todo-demo-alpha.vercel.app", // Allow only this URL
-  methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
-  allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
-  credentials: true, // Allow cookies or other credentials if needed
-};
+// const corsOptions = {
+//   origin: "https://todo-demo-alpha.vercel.app", // Allow only this URL
+//   methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
+//   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
+//   credentials: true, // Allow cookies or other credentials if needed
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+if (process.env.NODE_ENV) {
+  const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// only when ready to deploy
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+  // only when ready to deploy
+  app.use(express.static(path.resolve(__dirname, "./client/build")));
+}
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -42,6 +44,10 @@ app.use("/api/v1/auth", authRouter);
 // only when ready to deploy
 app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
 });
 
 const port = process.env.PORT || 5000; // Use PORT (uppercase)

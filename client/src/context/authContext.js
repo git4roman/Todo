@@ -25,24 +25,25 @@ const AuthProvider = ({ children }) => {
 
   // const {createAlert}=useAppContext();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        console.log("Base URL:", axios.defaults.baseURL);
-        const response = await axios.get("/api/v1/auth/login"); // Replace with your actual endpoint to fetch user data
-        if (response.data) {
-          dispatch({
-            type: "SETUP_USER",
-            payload: { user: response.data.user },
-          });
-        }
-      } catch (error) {
-        console.error("Failed to fetch user:", error); // Handle error if needed
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       console.log("Base URL:", axios.defaults.baseURL);
+  //       const response = await axios.get("/auth/login"); // Removed /api/v1
+  //       if (response.data) {
+  //         dispatch({
+  //           type: "SETUP_USER",
+  //           payload: { user: response.data.user },
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch user:", error); // Handle error if needed
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
+
   const handleauthChange = ({ name, value }) => {
     // handle auth change here
     dispatch({ type: "HANDLE_CHANGE", payload: { name, value } });
@@ -51,7 +52,7 @@ const AuthProvider = ({ children }) => {
   const registerFunc = async (currentUser) => {
     try {
       // dispatch({ type: "SETUP_USER" });
-      const { data } = await axios.post("/api/v1/auth/register", currentUser);
+      const { data } = await axios.post("/auth/register", currentUser); // Removed /api/v1
 
       // Dispatch the action to store user data
       dispatch({
@@ -77,7 +78,7 @@ const AuthProvider = ({ children }) => {
   const loginFunc = async (currentUser) => {
     try {
       console.log("Attempting login with", currentUser); // Debugging log
-      const { data } = await axios.post("/api/v1/auth/login", currentUser);
+      const { data } = await axios.post("/auth/login", currentUser); // Removed /api/v1
 
       if (data) {
         const { user } = data;
@@ -100,7 +101,7 @@ const AuthProvider = ({ children }) => {
 
   const logOut = async () => {
     try {
-      const reponse = await axios.get("/api/v1/auth/logout");
+      // const reponse = await axios.get("/auth/logout"); // Removed /api/v1
       // dispatch({
       //   type: "SHOW_ALERT",
       //   payload: {
@@ -113,7 +114,7 @@ const AuthProvider = ({ children }) => {
       setTimeout(() => {
         clearAlert();
       }, 1500);
-      navigate("/");
+      navigate("/landing");
     } catch (error) {
       toast.error(error.response?.data?.msg);
     }
@@ -131,4 +132,5 @@ const AuthProvider = ({ children }) => {
 const useAuthContext = () => {
   return useContext(AuthContext);
 };
+
 export { AuthProvider, useAuthContext };

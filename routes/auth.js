@@ -8,7 +8,7 @@ import {
 } from "../controllers/authController.js";
 
 router.route("/register").post(registerUser);
-router.route("/login").post(loginUser);
+router.route("/login").all(loginUser);
 router.route("/logOut").post(logOut);
 
 export default router;
