@@ -71,7 +71,7 @@ const Register = () => {
     password: "",
     isMember: false,
   };
-  const { registerFunc } = useAuthContext();
+  const { registerFunc, guestLogin } = useAuthContext();
   const [values, setValues] = useState(initialState);
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
@@ -127,6 +127,19 @@ const Register = () => {
             <ToggleButton type="button" onClick={toggleMember}>
               {!values.isMember ? "Login" : "Register"}
             </ToggleButton>
+            <p>
+              <ToggleButton
+                type="button"
+                onClick={() =>
+                  guestLogin({
+                    email: "Test@test.com",
+                    password: "Secret123",
+                  })
+                }
+              >
+                Take a Test
+              </ToggleButton>
+            </p>
           </p>
         </Form>
       </div>

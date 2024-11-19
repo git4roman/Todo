@@ -120,9 +120,37 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const guestLogin = async (currentUser) => {
+    try {
+      const { data } = await axios.post("/auth/login", currentUser);
+      if (data) {
+        const { user } = data;
+        console.log(user, "thiosskdjfksdhf");
+
+        dispatch({ type: "SETUP", payload: { user } });
+        displayAlert("success", "Test Drive logged in");
+        setTimeout(() => {
+          clearAlert();
+        }, 1500);
+        navigate("/");
+      } else {
+        console.error("Login failed: No data received.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{ ...state, handleauthChange, registerFunc, loginFunc, logOut }}
+      value={{
+        ...state,
+        handleauthChange,
+        registerFunc,
+        loginFunc,
+        logOut,
+        guestLogin,
+      }}
     >
       {children}
     </AuthContext.Provider>
