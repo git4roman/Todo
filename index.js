@@ -17,7 +17,7 @@ app.use(express.json()); // Parse incoming JSON requests
 
 app.use(cors());
 
-if (process.env.NODE_ENV) {
+if (process.env.NODE_ENV === "production") {
   const __dirname = dirname(fileURLToPath(import.meta.url));
 
   // only when ready to deploy
