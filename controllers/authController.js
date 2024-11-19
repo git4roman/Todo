@@ -66,6 +66,7 @@ export const loginUser = async (req, res) => {
     );
     res.cookie("token", token, {
       httpOnly: true, // Ensures the cookie can't be accessed via JavaScript
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
       secure: process.env.NODE_ENV === "production", // Use secure cookies only in production (when HTTPS is enabled)
     });
 
