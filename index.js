@@ -11,7 +11,7 @@ app.use(express.json()); // Parse incoming JSON requests
 const __dirname = dirname(fileURLToPath(import.meta.url)); // Define __dirname manually
 
 // CORS settings (if needed)
-app.use(cors());
+app.use(cors({credentials:true}));
 
 dotenv.config(); // Load environment variables from .env file
 
