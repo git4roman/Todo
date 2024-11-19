@@ -8,21 +8,10 @@ import cors from "cors";
 const app = express();
 app.use(express.json()); // Parse incoming JSON requests
 
-// const corsOptions = {
-//   origin: "https://todo-demo-alpha.vercel.app", // Allow only this URL
-//   methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed HTTP methods (optional)
-//   allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers (optional)
-//   credentials: true, // Allow cookies or other credentials if needed
-// };
+const __dirname = dirname(fileURLToPath(import.meta.url)); // Define __dirname manually
 
+// CORS settings (if needed)
 app.use(cors());
-
-if (process.env.NODE_ENV === "production") {
-  const __dirname = dirname(fileURLToPath(import.meta.url));
-
-  // only when ready to deploy
-  app.use(express.static(path.resolve(__dirname, "./client/build")));
-}
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -30,21 +19,23 @@ import todoRouter from "./routes/todo.js";
 import authRouter from "./routes/auth.js";
 import connectdb from "./db/connectdb.js";
 
-// Middleware
+// Serve static files only when in production environment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.resolve(__dirname, "./client/build")));
+}
 
-// Use the todo router for the "/api/v1/todo" path
+// Middleware
 app.use("/api/hello", (req, res) => {
   res.json({ msg: "Hello" });
 });
 app.use("/api/v1/todo", todoRouter);
 app.use("/api/v1/auth", authRouter);
-// import User from "./models/user.js";
-// app.post("/api/v1/auth/register", );
 
-// only when ready to deploy
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+// Serve the React app for any route not handled by API
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
